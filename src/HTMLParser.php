@@ -5,9 +5,29 @@ class HTMLParser
 
     function getParsedData($text){
         if($this->hasHTML($text)){
-            $text=$this->parseOutHTML($text);
-        }
-        return $text;
+            $text = $this->removeAllComments($text);
+            $result = $this->parseOutAllHTML($text);
+        } else
+            return $text;
+        return $result;
+    }
+
+    public function removeAllComments($text){
+        $text = preg_replace('<!--[^<>]*-->','',$text);
+        $text = str_replace("<>","",$text);
+
+        return trim($text);
+    }
+
+    public function parseOutAllHTML($text)
+    {
+        $result = "";
+        $elements = explode('>', $text);
+
+        foreach ($elements as $k => $v)
+            $result .= $this->extractNewHTMLline($v);
+
+        return trim($result);
     }
 
     private function hasHTML($text){
@@ -20,7 +40,7 @@ class HTMLParser
 
     }
 
-    private function parseOutHTML($text){
+    private function parseOutOneHTMLelement($text){
         $startTextPosition=$this->getPositionOfFirstHTMLElement($text)+1;
         $lengthOfText=$this->getLengthOfTextInFirstHTMLElement($text,$startTextPosition);
         return substr($text,$startTextPosition,$lengthOfText);
@@ -34,6 +54,20 @@ class HTMLParser
 
     private function getPositionOfFirstHTMLElement($text){
         return strpos($text,'>');
+    }
+
+    public function extractNewHTMLline($element)
+    {
+        $line = $this->parseOutOneHTMLelement(">" . $element . ">");
+        $line = trim($line);
+        if($this->isElementEmpty($line))
+            return $line . "\n";
+
+    }
+
+    public function isElementEmpty($line)
+    {
+        return strlen($line) != 0;
     }
 }
 

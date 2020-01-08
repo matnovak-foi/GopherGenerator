@@ -27,16 +27,9 @@ class AcceptanceTest extends TestCase
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
-<ul><li>podržati
-	i modernizirati nastavni plan i program postojećih kolegija koje
-	izvode članovi Laboratorija (Web dizajn i programiranje, Napredne
-	web tehnologije i servisi, Uzorci dizajna, Sustavi za elektroničko
-	učenje, Izgradnja web aplikacija, Multimedijski sustavi) 
-	
-	</li><li>predložiti
-	nove kolegije na preddiplomskoj, diplomskoj i/ili poslijediplomskoj
-	razini koji će dopuniti postojeći nastavni plan i program na
-	Fakultetu organizacije i informatike
+<ul><li>podržati i modernizirati nastavni plan i program postojećih kolegija koje izvode članovi Laboratorija (Web dizajn i programiranje, Napredne web tehnologije i servisi, Uzorci dizajna, Sustavi za elektroničko učenje, Izgradnja web aplikacija, Multimedijski sustavi) 
+
+	</li><li>predložiti nove kolegije na preddiplomskoj, diplomskoj i/ili poslijediplomskoj razini koji će dopuniti postojeći nastavni plan i program na Fakultetu organizacije i informatike
 	</li></ul>
 <!-- /wp:list -->
 
@@ -49,27 +42,19 @@ class AcceptanceTest extends TestCase
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
-<ul><li>godišnje
-	objaviti i prezentrati barem dva stručna rada iz područja rada
-	Laboratorija na domaćim stručnim konferencijama i savjetovanjima
-	</li><li>godišnje
-	objaviti i prezentrati barem dva znanstvena rada iz područja rada
-	Laboratorija na međunarodnim znanstvenim konferencijama
-	</li><li>godišnje
-	objaviti barem dva znanstvena rada iz područja rada Laboratorija u
-	međunarodnim znanstvenim časopisima
+<ul><li>godišnje objaviti i prezentrati barem dva stručna rada iz područja rada Laboratorija na domaćim stručnim konferencijama i savjetovanjima
+	</li><li>godišnje objaviti i prezentrati barem dva znanstvena rada iz područja rada Laboratorija na međunarodnim znanstvenim konferencijama
+	</li><li>godišnje objaviti barem dva znanstvena rada iz područja rada Laboratorija u međunarodnim znanstvenim časopisima
 	</li></ul>
 <!-- /wp:list -->';
-        $output="O Laboratoriju
-        Laboratorij ima za opći cilj spojiti istraživanja, razvoj industrijskih projekata i edukaciju u području Web arhitektura, tehnologija, servisa i sučelja.
-        Pojedinačni ciljevi su sljedeći
-        - podržati i modernizirati nastavni plan i program postojećih kolegija koje izvode članovi Laboratorija (Web dizajn i programiranje, Napredne web tehnologije i servisi, Uzorci dizajna, Sustavi za elektroničko učenje, Izgradnja web aplikacija, Multimedijski sustavi)
-        - predložiti nove kolegije na preddiplomskoj, diplomskoj i/ili poslijediplomskoj razini koji će dopuniti postojeći nastavni plan i program na Fakultetu organizacije i informatike
-        
-        Plan rada
-        - godišnje objaviti i prezentrati barem dva stručna rada iz područja rada Laboratorija na domaćim stručnim konferencijama i savjetovanjima
-        - godišnje objaviti i prezentrati barem dva znanstvena rada iz područja rada Laboratorija na međunarodnim znanstvenim konferencijama
-        - godišnje objaviti barem dva znanstvena rada iz područja rada Laboratorija u međunarodnim znanstvenim časopisima";
+        $output="O Laboratoriju\nLaboratorij ima za opći cilj spojiti istraživanja, razvoj industrijskih projekata i edukaciju u području Web arhitektura, tehnologija, servisa i sučelja.
+Pojedinačni ciljevi su sljedeći
+- podržati i modernizirati nastavni plan i program postojećih kolegija koje izvode članovi Laboratorija (Web dizajn i programiranje, Napredne web tehnologije i servisi, Uzorci dizajna, Sustavi za elektroničko učenje, Izgradnja web aplikacija, Multimedijski sustavi)
+- predložiti nove kolegije na preddiplomskoj, diplomskoj i/ili poslijediplomskoj razini koji će dopuniti postojeći nastavni plan i program na Fakultetu organizacije i informatike
+Plan rada
+- godišnje objaviti i prezentrati barem dva stručna rada iz područja rada Laboratorija na domaćim stručnim konferencijama i savjetovanjima
+- godišnje objaviti i prezentrati barem dva znanstvena rada iz područja rada Laboratorija na međunarodnim znanstvenim konferencijama
+- godišnje objaviti barem dva znanstvena rada iz područja rada Laboratorija u međunarodnim znanstvenim časopisima";
 
         $this->assertEquals($output,$this->htmlParser->getParsedData($input));
     }

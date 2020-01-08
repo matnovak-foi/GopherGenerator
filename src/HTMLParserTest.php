@@ -30,6 +30,10 @@ class HTMLParserTest extends TestCase
         $this->assertEquals('',$this->htmlParser->getParsedData(""));
     }
 
+    public function testGivenHTMLCodeSPANWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals('TextInSPAN',$this->htmlParser->getParsedData("<span>TextInSPAN</span>"));
+    }
+
     public function testGivenHTMLCodeParagraphWithTextWhenGetParsedDataThenReturnOnlyText():void {
         $this->assertEquals('TextInParagraph',$this->htmlParser->getParsedData("<p>TextInParagraph</p>"));
     }
@@ -38,9 +42,34 @@ class HTMLParserTest extends TestCase
         $this->assertEquals('TextInH1',$this->htmlParser->getParsedData("<h1>TextInH1</h1>"));
     }
 
-    public function testGivenHTMLCodeSPANWithTextWhenGetParsedDataThenReturnOnlyText():void {
-        $this->assertEquals('TextInSPAN',$this->htmlParser->getParsedData("<span>TextInSPAN</span>"));
+    public function testGivenMultipleHTMLelementsWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals("TextInH1\nTextInP\nTextInSPAN",$this->htmlParser->getParsedData("<h1>TextInH1</h1><p>TextInP</p><span>TextInSPAN</span>"));
     }
+
+
+    public function testGivenNestedHTMLelementWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals("TextInH1\nTextInP\nTextInSPAN",$this->htmlParser->getParsedData("<h1>TextInH1<p>TextInP<span>TextInSPAN</span></p></h1>"));
+    }
+
+    public function testGivenNestedHTMLelementInARowWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals("TextInH1-TextInP-TextInSPAN",$this->htmlParser->getParsedData("<h1><p><span>TextInH1-TextInP-TextInSPAN</span></p></h1>"));
+    }
+
+    public function testGivenNestedAndMultipleHTMLelementWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals("TextInH1-TextInP-TextInSPAN\nTextInH1-TextInP-TextInSPAN",$this->htmlParser->getParsedData("<h1><p><span>TextInH1-TextInP-TextInSPAN</span></p></h1><h1><p><span>TextInH1-TextInP-TextInSPAN</span></p></h1>"));
+    }
+
+    public function testGivenNestedAndMultipleHTMLelementAndMixedWithTextWhenGetParsedDataThenReturnOnlyText():void {
+        $this->assertEquals("TextInH1-TextInP\nTextInH1-TextInP-TextInSPAN\nTextInH1-TextInP-TextInSPAN",$this->htmlParser->getParsedData("<h1><p>TextInH1-TextInP<span>TextInH1-TextInP-TextInSPAN</span></p></h1><h1><p><span>TextInH1-TextInP-TextInSPAN</span></p></h1>"));
+    }
+
+    public function testGivenHTMLCommentWithTextWhenGetParsedDataThenReturnEmptyText():void {
+        $this->assertEquals("",$this->htmlParser->getParsedData('<!-- wp:heading {\"level\":1,\"align\":\"center\"} -->'));
+    }
+
+    public function testGivenMultipleHTMLCommentWithTextWhenGetParsedDataThenReturnEmptyText():void {
+        $this->assertEquals("",$this->htmlParser->getParsedData("<!-- /wp:heading -->\n\n<!-- wp:paragraph {\\\"align\\\":\\\"left\\\",\\\"fontSize\\\":\\\"regular\\\"} -->"));
+}
 }
 
 ?>
