@@ -30,7 +30,7 @@ class WordPressDAO implements iDataAccessObject {
     {
         $pages = array();
         $result = $this -> query("SELECT post_content, post_title FROM `wp_posts` WHERE `post_status` LIKE 'publish' AND `post_type` LIKE 'page'");
-        while ($record = $result->fetch_assoc()) {
+        while ($record = $result->fetch_object()) {
             $pages[$record->post_title] = $record->post_content;
         }
         return $pages;
