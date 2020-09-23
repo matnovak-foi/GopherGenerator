@@ -12,7 +12,7 @@ class iDataAccessObjectTest extends TestCase
     private $dao;
 
     public function setUp(): void{
-        $this->dao = new WordPressDAO();
+        $this->dao = new MockDAO();
     }
 
     public function testHasInstance(): void {

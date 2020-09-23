@@ -2,17 +2,17 @@
 
 class MockDAO implements iDataAccessObject{
 
+    public $posts = array("PostTitle1" => "post 1", "PostTitle2" => "post 2", "PostTitle3" => "post 3");
+    public $pages = array("PostPage1" => "page 1", "PostPage2" => "page 2", "PostPage3" => "page 3");
+
+
     function getPosts()
     {
-        $posts = array();
-        array_push($posts, "post 1", "post 2", "post 3");
-        return $posts;
+        return $this->posts;
     }
 
     function getPages()
     {
-        $pages = array();
-        array_push($pages, "page 1", "page 2", "page 3");
-        return $pages;
+        return $this->pages;
     }
 }

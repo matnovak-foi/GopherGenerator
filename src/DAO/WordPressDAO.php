@@ -1,6 +1,5 @@
 <?php
 
-
 class WordPressDAO implements iDataAccessObject {
     private $connection;
     private $host = 'localhost';
@@ -20,9 +19,9 @@ class WordPressDAO implements iDataAccessObject {
     public function getPosts()
     {
         $posts = array();
-        $result = $this -> query("SELECT post_content FROM `wp_posts` WHERE `post_status` LIKE 'publish' AND `post_type` LIKE 'post'");
+        $result = $this -> query("SELECT post_content, post_title FROM `wp_posts` WHERE `post_status` LIKE 'publish' AND `post_type` LIKE 'post'");
         while ($record = $result->fetch_object()) {
-            array_push($posts, $record->post_content);
+            $posts[$record->post_title] = $record->post_content;
         }
         return $posts;
     }
@@ -30,9 +29,9 @@ class WordPressDAO implements iDataAccessObject {
     public function getPages()
     {
         $pages = array();
-        $result = $this -> query("SELECT * FROM `wp_posts` WHERE `post_status` LIKE 'publish' AND `post_type` LIKE 'page'");
+        $result = $this -> query("SELECT post_content, post_title FROM `wp_posts` WHERE `post_status` LIKE 'publish' AND `post_type` LIKE 'page'");
         while ($record = $result->fetch_assoc()) {
-            array_push($pages, $record);
+            $pages[$record->post_title] = $record->post_content;
         }
         return $pages;
     }
