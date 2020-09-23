@@ -19,6 +19,11 @@ class GopherGeneratorTest extends TestCase
         $this->htmlParser = new HTMLParserDummy();
     }
 
+    public function tearDown(): void{
+        if(file_exists("testFiles/gophermap"))
+            unlink("testFiles/gophermap");
+    }
+
     public function testHasInstance(): void {
         $this->assertInstanceOf(
             GopherGenerator::class, $this->main);
@@ -41,7 +46,7 @@ class GopherGeneratorTest extends TestCase
         $this->wordpressDAO->posts = array("postTitle1" => "post1");
         $this->main->generateGopherPagesForPosts();
 
-        $fileFullPath="testFiles/postTitle1";
+        $fileFullPath="testFiles/POSTS/postTitle1";
         $file = fopen($fileFullPath,"r");
         $textFromFile = fread($file,filesize($fileFullPath));
         fclose($file);
@@ -56,7 +61,7 @@ class GopherGeneratorTest extends TestCase
         $this->assertEquals(sizeof($this->wordpressDAO->getPosts()),$this->htmlParser->callCount);
         $i=0;
         foreach ($this->wordpressDAO->getPosts() as $postTitle => $post) {
-            $fileFullPath = "testFiles/" . $postTitle;
+            $fileFullPath = "testFiles/POSTS/" . $postTitle;
             $file = fopen($fileFullPath, "r");
             $textFromFile = fread($file, filesize($fileFullPath));
             fclose($file);
@@ -74,7 +79,7 @@ class GopherGeneratorTest extends TestCase
         $this->assertEquals(sizeof($this->wordpressDAO->getPages()),$this->htmlParser->callCount);
         $i=0;
         foreach ($this->wordpressDAO->getPages() as $pageTitle => $pageText) {
-            $fileFullPath = "testFiles/" . $pageTitle;
+            $fileFullPath = "testFiles/PAGES/" . $pageTitle;
             $file = fopen($fileFullPath, "r");
             $textFromFile = fread($file, filesize($fileFullPath));
             fclose($file);
@@ -84,6 +89,20 @@ class GopherGeneratorTest extends TestCase
             $this->assertEquals($pageText, $textFromFile);
             unlink($fileFullPath);
         }
+    }
+
+    public function testMainGetsDataAndCreatesGopherMap(): void {
+
+        $this->main->setHTMLParser($this->htmlParser);
+        $this->main->generateGopherPagesForWPPages();
+        foreach ($this->wordpressDAO->getPages() as $pageTitle => $pageText) {
+            $fileFullPath = "testFiles/PAGES/" . $pageTitle;
+            unlink($fileFullPath);
+        }
+        $this->assertEquals(sizeof($this->wordpressDAO->getPages()),$this->htmlParser->callCount);
+        $fileFullPath="testFiles/gophermap";
+        $this->assertTrue(file_exists($fileFullPath));
+        unlink($fileFullPath);
     }
 }
 ?>

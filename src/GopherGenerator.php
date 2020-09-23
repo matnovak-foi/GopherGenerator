@@ -31,22 +31,28 @@ class GopherGenerator
         return $this->wordpressDAO;
     }
 
+    public function clearGopherMap(){
+        $this->gopherPageCreator->deleteOldGopherMap();
+    }
+
     public function generateGopherPagesForPosts()
     {
         $posts = $this->wordpressDAO->getPosts();
-        $this->generateGopherPages($posts);
+        $this->generateGopherPages($posts,"POSTS");
+        $this->gopherPageCreator->createGopherMap($posts,"POSTS");
     }
 
     public function generateGopherPagesForWPPages(){
         $pages = $this->wordpressDAO->getPages();
-        $this->generateGopherPages($pages);
+        $this->generateGopherPages($pages,"PAGES");
+        $this->gopherPageCreator->createGopherMap($pages,"PAGES");
     }
 
-    private function generateGopherPages($posts){
+    private function generateGopherPages($posts,$type){
         foreach ($posts as $postTitle => $post)
         {
             $parsedPostText = $this->htmlParser->getParsedData($post);
-            $this->gopherPageCreator->createPage($parsedPostText,$postTitle);
+            $this->gopherPageCreator->createPage($parsedPostText,$postTitle,$type);
         }
     }
 }

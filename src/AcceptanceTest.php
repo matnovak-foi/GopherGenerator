@@ -62,8 +62,8 @@ Plan rada
     public function testGivenHTMLTextWhenGetParsedDataAndGenerateGopherPageThenReturnGopherPageWithText(): void {
         $output = $this->htmlParser->getParsedData($this->input);
         $gopherPageCreator = new GopherPageCreator("testFiles/");
-        $gopherPageCreator->createPage($output,"PostTitle");
-        $fileFullPath="testFiles/PostTitle";
+        $gopherPageCreator->createPage($output,"PostTitle","POSTS");
+        $fileFullPath="testFiles/POSTS/PostTitle";
         $file = fopen($fileFullPath,"r");
         $textFromFile = fread($file,filesize($fileFullPath));
         fclose($file);
