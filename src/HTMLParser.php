@@ -2,7 +2,6 @@
 
 class HTMLParser
 {
-
     function getParsedData($text){
         if($this->hasHTML($text)){
             $text = $this->removeAllComments($text);
@@ -12,14 +11,14 @@ class HTMLParser
         return $result;
     }
 
-    public function removeAllComments($text){
+    private function removeAllComments($text){
         $text = preg_replace('<!--[^<>]*-->','',$text);
         $text = str_replace("<>","",$text);
 
         return trim($text);
     }
 
-    public function parseOutAllHTML($text)
+    private function parseOutAllHTML($text)
     {
         $result = "";
         $elements = explode('>', $text);
@@ -40,10 +39,25 @@ class HTMLParser
 
     }
 
+    private function getPositionOfFirstHTMLElement($text){
+        return strpos($text,'>');
+    }
+
+    private function extractNewHTMLline($element)
+    {
+        $line = $this->parseOutOneHTMLelement(">" . $element . ">");
+        $line = trim($line);
+        if($this->isElementEmpty($line))
+            return $line . "\n";
+    }
+
     private function parseOutOneHTMLelement($text){
         $startTextPosition=$this->getPositionOfFirstHTMLElement($text)+1;
         $lengthOfText=$this->getLengthOfTextInFirstHTMLElement($text,$startTextPosition);
-        return substr($text,$startTextPosition,$lengthOfText);
+        $finalText = substr($text,$startTextPosition,$lengthOfText);
+        if(strpos($text,"</li>"))
+            $finalText="- ".$finalText;
+        return $finalText;
     }
 
     private function getLengthOfTextInFirstHTMLElement($text,$start_pos){
@@ -52,20 +66,7 @@ class HTMLParser
         return $length;
     }
 
-    private function getPositionOfFirstHTMLElement($text){
-        return strpos($text,'>');
-    }
-
-    public function extractNewHTMLline($element)
-    {
-        $line = $this->parseOutOneHTMLelement(">" . $element . ">");
-        $line = trim($line);
-        if($this->isElementEmpty($line))
-            return $line . "\n";
-
-    }
-
-    public function isElementEmpty($line)
+    private function isElementEmpty($line)
     {
         return strlen($line) != 0;
     }

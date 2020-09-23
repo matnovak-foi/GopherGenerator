@@ -69,7 +69,15 @@ class HTMLParserTest extends TestCase
 
     public function testGivenMultipleHTMLCommentWithTextWhenGetParsedDataThenReturnEmptyText():void {
         $this->assertEquals("",$this->htmlParser->getParsedData("<!-- /wp:heading -->\n\n<!-- wp:paragraph {\\\"align\\\":\\\"left\\\",\\\"fontSize\\\":\\\"regular\\\"} -->"));
-}
+    }
+
+    public function testGivenEmptyListWithOneElemntReturnMinus():void {
+        $this->assertEquals("-",$this->htmlParser->getParsedData("<ul><li></li></ul>"));
+    }
+
+    public function testGivenListWithOneElemntWithTextReturnMinusAndText():void {
+        $this->assertEquals("- Pero",$this->htmlParser->getParsedData("<ul><li>Pero</li></ul>"));
+    }
 }
 
 ?>
